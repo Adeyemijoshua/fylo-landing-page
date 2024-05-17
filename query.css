@@ -1,0 +1,129 @@
+/* rem and em do not depend on html font-size in media queries! 1rem = 1em = 16px */
+
+/********************/
+/* BELOW 1344px (smaller computers) */
+/********************/
+@media (max-width: 84em) {
+  .hero .hero-2 .hero-3 {
+    max-width: 120rem;
+  }
+}
+/********************/
+/* BELOW 1220px (Landscape Tablets) */
+/********************/
+@media (max-width: 75em) {
+  html {
+    font-size: 56.25%;
+  }
+  .hero-2 {
+    gap: 8rem;
+  }
+}
+
+/********************/
+/* BELOW 944px (Tablets) */
+/********************/
+@media (max-width: 59em) {
+  html {
+    font-size: 50%;
+  }
+  .hero-email {
+    width: 40%;
+  }
+  .big {
+    width: 100%;
+  }
+  .sm {
+    width: 60%;
+  }
+  .card {
+    width: 60%;
+  }
+}
+/********************/
+/* BELOW 760px (Smaller Tablets) */
+/********************/
+@media (max-width: 48em) {
+  html {
+    font-size: 45%;
+  }
+  .footer-logo {
+    width: 10rem;
+  }
+  .email-logo,
+  .phone-logo {
+    width: 2.5rem;
+  }
+}
+/********************/
+/* BELOW 590px (Phones) */
+/********************/
+@media (max-width: 37em) {
+  .hero {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-img-box {
+    grid-row: 1/2;
+  }
+  .hero-heading,
+  .hero-description {
+    text-align: center;
+  }
+  .hero-button,
+  .hero-email {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .illustration-container {
+    background-image: url("images/bg-curve-mobile.svg");
+    grid-row: 1/2;
+  }
+  .hero-2 {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-description-box {
+    width: 100%;
+  }
+  .left {
+    text-align: left;
+  }
+  .link {
+    justify-content: center;
+    align-items: center;
+  }
+  .card {
+    margin: 5% auto;
+  }
+  .hero-3 {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2.2rem;
+  }
+  .sect-3-right {
+    gap: 0.5rem;
+  }
+  .footer-logo {
+    width: 9rem;
+  }
+  .email-logo,
+  .phone-logo {
+    width: 2.5rem;
+  }
+  .footer-ctn {
+    grid-template-columns: 1fr;
+    gap: 5rem;
+  }
+  .ctn a {
+    font-size: 1.25rem;
+    line-height: 2;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
