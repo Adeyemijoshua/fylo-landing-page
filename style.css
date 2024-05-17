@@ -172,7 +172,9 @@ input[type="text"]::active {
   width: 100%;
 }
 
-.hero-button {
+.hero-button,
+.hero-button:link,
+.hero-button:visited {
   font-weight: bold;
   color: #fff;
   width: 40%;
@@ -182,30 +184,28 @@ input[type="text"]::active {
   padding: 3% 7%;
   vertical-align: middle;
   font-size: 1.25rem;
+  transition: all 0.3s;
+  cursor: pointer;
 }
-.hero-button::hover {
-  background: hsl(210, 80%, 50%);
+.hero-button:hover,
+.hero-button:active {
+  background: hsla(224, 93%, 58%, 0.7);
 }
 .sm {
   width: 40%;
-}
-.main-content__btn:hover {
-  background: hsl(224, 93%, 38%);
 }
 .arrow-icon {
   padding: 0;
   margin: 0;
 }
 .link {
-  display: flex;
-
-  align-items: center;
+  display: inline-block;
+  border-bottom: 1px solid hsl(170, 45%, 43%);
 }
 .fylo-link {
   color: hsl(170, 45%, 43%);
-  text-decoration: underline;
   font-size: 1.25rem;
-  margin-bottom: 2.4rem;
+  /* margin-bottom: 2.4rem; */
 }
 .fylo-link:hover {
   color: hsl(170, 45%, 23%);
@@ -296,12 +296,27 @@ ion-icon {
   width: 20px;
   height: 20px;
   fill: #fff;
+  transition: all 0.3s;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  padding: 0.5rem 0.5rem;
+  border-radius: 50%;
+  border: 1px solid #fff;
+}
+ion-icon:hover {
+  fill: hsl(224, 93%, 58%);
+  border: 1px solid hsl(224, 93%, 58%);
 }
 .ctn a {
   color: #fff;
   text-decoration: none;
   font-size: 1.25rem;
   line-height: 1.5;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.ctn a:hover {
+  color: hsl(224, 93%, 58%);
 }
 .name {
   color: #000;

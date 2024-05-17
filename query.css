@@ -91,7 +91,8 @@
   .left {
     text-align: left;
   }
-  .link {
+  .fylo-link-ctn {
+    display: flex;
     justify-content: center;
     align-items: center;
   }
