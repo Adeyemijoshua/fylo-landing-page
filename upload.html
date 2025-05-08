@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fylo — Upload Files</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Variables (Fylo Challenge Palette) ===== */
+    :root {
+      --intro-bg: hsl(240, 75%, 98%);    /* Dark header */
+      --main-bg: hsl(0, 0%, 100%);     /* Page background */
+      --form-bg: hsl(0, 0%, 100%);       /* White form */
+      --accent-light: hsl(176, 68%, 64%); /* Teal */
+      --accent-dark: hsl(198, 60%, 50%);  /* Blue */
+      --text-dark: hsl(217, 28%, 15%);    /* Dark text */
+      --text-light: hsl(0, 0%, 100%);     /* White text */
+      --bg-alt: hsl(170, 45%, 43%);       /* Accent background */
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--main-bg);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Header Logo */
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: fadeIn 0.8s ease-out;
+    }
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    /* Main Section */
+    .upload-container {
+      background: var(--form-bg);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      animation: fadeInUp 0.8s ease-out;
+    }
+    .upload-container h1 {
+      font-size: 2rem;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* File Upload Label */
+    .upload-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      border: 2px dashed var(--accent-light);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+      background: var(--form-bg);
+    }
+    .upload-label:hover {
+      background: var(--bg-alt);
+      border-color: var(--accent-dark);
+    }
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      fill: var(--accent-light);
+      transition: transform 0.3s,
+                  fill 0.3s;
+    }
+    .upload-label:hover .upload-icon {
+      transform: translateY(-4px);
+      fill: var(--accent-dark);
+    }
+    .upload-label span {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .upload-input { display: none; }
+
+    .file-name {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: var(--accent-dark);
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin-top: 1.5rem;
+      background: var(--bg-alt);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      height: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+    }
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: var(--accent-light);
+      transition: width 1s ease;
+    }
+
+    /* Success Message */
+    .success-msg {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: var(--accent-light);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .upload-container { padding: 1.5rem; }
+      .upload-container h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">Fylo</div>
+  </header>
+
+  <section class="upload-container">
+    <h1>Upload Your File</h1>
+    <label for="fileInput" class="upload-label">
+      <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path d="M.5 9.9a.5.5 0 0 1 .5-.5h3V5.5a.5.5..."/>
+      </svg>
+      <span>Click to Select</span>
+      <input type="file" id="fileInput" class="upload-input" />
+    </label>
+    <div class="file-name" id="fileName"></div>
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="success-msg" id="successMsg">Upload successful!</div>
+  </section>
+
+  <script>
+    const input = document.getElementById('fileInput');
+    const nameEl = document.getElementById('fileName');
+    const progCont = document.getElementById('progressContainer');
+    const progBar = document.getElementById('progressBar');
+    const msg = document.getElementById('successMsg');
+
+    input.addEventListener('change', () => {
+      const file = input.files[0];
+      if (!file) return;
+      nameEl.textContent = file.name;
+      nameEl.style.opacity = '1';
+      progCont.style.opacity = '1';
+      setTimeout(() => {
+        progBar.style.width = '100%';
+      }, 100);
+      progBar.addEventListener('transitionend', () => {
+        msg.style.opacity = '1';
+        msg.style.transform = 'translateY(0)';
+      }, { once: true });
+    });
+  </script>
+
+</body>
+</html>

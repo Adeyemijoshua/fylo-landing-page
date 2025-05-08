@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fylo — Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Variables (Fylo Palette) ===== */
+    :root {
+      --bg: hsl(240, 75%, 98%);
+      --card-bg: hsl(0, 0%, 100%);
+      --accent: hsl(176, 68%, 64%);
+      --accent-dark: hsl(198, 60%, 50%);
+      --text-dark: hsl(217, 28%, 15%);
+      --text-light: hsl(0, 0%, 100%);
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      background: var(--bg);
+      font-family: 'Open Sans', sans-serif;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      height:100vh;
+      color: var(--text-dark);
+    }
+    .signin-card {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 24px var(--shadow);
+      animation: fadeInUp 0.8s ease-out;
+    }
+    .signin-card h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+      position: relative;
+      animation: fadeIn 0.6s ease-out;
+    }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.4s; }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(176,233,201,0.3);
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--accent);
+      color: var(--text-light);
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.3s;
+      animation: fadeIn 0.6s ease-out 0.6s both;
+    }
+    .btn:hover {
+      background: var(--accent-dark);
+    }
+    .message {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--accent-dark);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="signin-card">
+    <h1>Sign In</h1>
+    <form id="signinForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn">Sign In</button>
+      <div class="message" id="message"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('signinForm');
+    const messageEl = document.getElementById('message');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      if (!email || !password) return;
+      // Store in localStorage
+      const user = { email, password };
+      localStorage.setItem('user', JSON.stringify(user));
+      // Show confirmation
+      messageEl.textContent = 'Signed in as ' + email;
+      messageEl.style.opacity = '1';
+      messageEl.style.transform = 'translateY(0)';
+      // Optionally clear form
+      form.reset();
+    });
+  </script>
+</body>
+</html>
